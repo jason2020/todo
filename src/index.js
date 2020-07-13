@@ -1,13 +1,63 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// s
 import * as serviceWorker from './serviceWorker';
 
+class TodoList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '', todoList: ["blah", "something"]
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.createNewTodo = this.createNewTodo.bind(this);
+  }
+
+  componentDidMount() {
+    
+  }
+
+  componentWillUnmount() {
+    
+  }
+
+  createNewTodo() {
+    if (this.state.value !== "") {
+      let temp = this.state.todoList;
+      temp.push(this.state.value);
+      this.setState({todoList: temp, value: ''});
+    }
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Todo List</h1>
+        <ul>
+            {this.state.todoList.map(item => (
+              <li key={item.toString()}>{item}</li>
+            ))}
+        </ul>
+        Todo:
+        <input type="text" value={this.state.value} onChange={this.handleChange} />
+        <input
+          type="button"
+          onClick={this.createNewTodo}
+        />
+      </div>
+      
+    );
+  }
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <TodoList />,
   document.getElementById('root')
 );
 
